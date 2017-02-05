@@ -66,4 +66,3 @@ public class State
 	// States may call ConcludeState on themselves to end their processing.
 	public void ConcludeState() { state_machine.Reset(); }
 }
-

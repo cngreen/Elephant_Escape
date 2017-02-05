@@ -46,7 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\__Scripts\AnimationStateMachine.cs" />
      <Compile Include="Assets\__Scripts\Camera.cs" />
      <Compile Include="Assets\__Scripts\Elephant.cs" />
      <Compile Include="Assets\__Scripts\StateMachine.cs" />

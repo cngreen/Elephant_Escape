@@ -65,14 +65,14 @@ public class Elephant: MonoBehaviour {
 
 		if (RightArrow) {
 			walking = true;
-			vel.x = 5f;
+			vel.x = 7f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = false;
 		}
 
 		if (LeftArrow) {
 			walking = true;
-			vel.x = -5f;
+			vel.x = -7f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = true;
 		}
