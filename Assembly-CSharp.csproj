@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\__Scripts\Camera.cs" />
      <Compile Include="Assets\__Scripts\Elephant.cs" />
+     <Compile Include="Assets\__Scripts\HUD.cs" />
      <Compile Include="Assets\__Scripts\StateMachine.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>

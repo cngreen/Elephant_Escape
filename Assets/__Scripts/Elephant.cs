@@ -55,10 +55,6 @@ public class Elephant: MonoBehaviour {
 		vel.x = 0f;
 		rb.velocity = vel;
 
-//		if (on_ground) {
-//			rb.useGravity = false;
-//		}
-
 		if (rb.velocity.x <= 0.5) {
 			walking = false;
 		}
@@ -98,15 +94,7 @@ public class Elephant: MonoBehaviour {
 		if (other.gameObject.tag == "Key") {
 			has_key = true;
 			Destroy (other.gameObject);
-		} else if (other.gameObject.tag == "Cage") {
-			if (has_key) {
-				Destroy (other.gameObject);
-			}
-		} else if (other.gameObject.tag == "Baby Elephant") {
-			// WIN
-			print("You win!");
 		}
-
 	}
 
 	void OnCollisionEnter(Collision coll){
@@ -119,6 +107,12 @@ public class Elephant: MonoBehaviour {
 
 		if (coll.gameObject.tag == "Baby Elephant") {
 			print ("You win!");
+		}
+
+		if (coll.gameObject.tag == "Cage") {
+			if (has_key) {
+				Destroy (coll.gameObject);
+			}
 		}
 
 
@@ -159,7 +153,7 @@ public class Elephant: MonoBehaviour {
 			if (Ella.walking)
 				elapsedTime += 1;
 
-			if (!Ella.walking) {
+			if (!Ella.walking || Ella.jumping) {
 				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
 				return;
 			}
