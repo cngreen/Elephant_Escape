@@ -35,6 +35,11 @@ public class Camera: MonoBehaviour {
 			camera_pos.x = elephant_pos.x;
 			camera_pos.z = -20;
 
+			if (camera_pos.y < (elephant_pos.y - 5))
+				camera_pos.y += 0.1f;
+			else if (camera_pos.y > (elephant_pos.y + 5))
+				camera_pos.y -= 0.1f;
+
 			camera.transform.position = camera_pos;
 		}
 		

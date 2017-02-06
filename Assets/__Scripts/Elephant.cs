@@ -135,7 +135,7 @@ public class Elephant: MonoBehaviour {
 		on_ground = false;
 
 		Vector3 vel = rb.velocity;
-		vel.y = 10f;
+		vel.y = 15f;
 		rb.velocity = vel;	
 	}
 	//-------------
