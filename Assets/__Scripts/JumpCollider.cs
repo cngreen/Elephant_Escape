@@ -9,6 +9,5 @@ public class JumpCollider: MonoBehaviour {
 		else
 			GetComponent<BoxCollider> ().enabled = true;
 	}
-
 }
 

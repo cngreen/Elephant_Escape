@@ -112,13 +112,15 @@ public class Elephant: MonoBehaviour {
 		if (coll.gameObject.tag == "Ground") {
 			rb.velocity = Vector3.zero;
 			jumping = false;
+		} else if (coll.gameObject.tag == "Jump Collider") {
+			needs_help = true;
 		}
 
-		if (coll.gameObject.tag == "Baby Elephant") {
+		else if (coll.gameObject.tag == "Baby Elephant") {
 			print ("You win!");
 		}
 
-		if (coll.gameObject.tag == "Cage") {
+		else if (coll.gameObject.tag == "Cage") {
 			if (has_key) {
 				Destroy (coll.gameObject);
 			}
