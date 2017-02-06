@@ -17,13 +17,15 @@ public class Camera: MonoBehaviour {
 		
 	// Update is called once per frame
 	// ---------------------------------------------------------
-	private int level_show_time = 100;
+	//private int level_show_time = 100;
 	void Update () {
 		if (show_level == true && !Elephant.instance.walking) {
-			level_show_time -= 1;
+			return;
+			//level_show_time -= 1;
 		}
 
-		if (level_show_time <= 0 || Elephant.instance.walking)
+		//if (level_show_time <= 0 || Elephant.instance.walking)
+		if (Elephant.instance.walking)
 			show_level = false;
 
 		if (!show_level) {

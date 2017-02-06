@@ -10,6 +10,8 @@ public class Elephant: MonoBehaviour {
 	public bool on_ground = true;
 	public bool walking = false;
 
+	public bool needs_help = false;
+
 	public Sprite[] walking_sprites;
 	public Sprite normal_sprite;
 
@@ -29,6 +31,8 @@ public class Elephant: MonoBehaviour {
 		instance = this;
 
 		rb = GetComponent<Rigidbody> ();
+
+		needs_help = true;
 		
 	}
 	
@@ -58,6 +62,11 @@ public class Elephant: MonoBehaviour {
 		if (rb.velocity.x <= 0.5) {
 			walking = false;
 		}
+
+		if (rb.velocity.y > 0.1 || rb.velocity.y < -0.1)
+			jumping = true;
+		else
+			jumping = false;
 
 		if (RightArrow) {
 			walking = true;
