@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elephant: MonoBehaviour {
+public partial class Elephant: MonoBehaviour {
 
 	public static Elephant instance;
 	public bool has_key = false;
@@ -62,30 +62,21 @@ public class Elephant: MonoBehaviour {
 		Z_Key = Input.GetKeyDown (KeyCode.Z);
 		X_Key = Input.GetKeyDown (KeyCode.X);
 
-		RaycastHit hit;
-
-		Vector3 fwd = transform.TransformDirection(Vector3.forward);
-
-		if (Physics.Raycast(transform.position, fwd, out hit))
-			print("Found an object - distance: " + hit.distance);
-
 		Vector3 vel = rb.velocity;
 		vel.x = 0f;
 		rb.velocity = vel;
 
 		// CHECK IF BUTTON STILL PRESSED
 		if (RightArrow && right_prev > horizontal){
-			print ("hi");
 			RightArrow = false;
 		}
-		if (LeftArrow && left_prev < horizontal) {
-			print ("hey");
+		else if (LeftArrow && left_prev < horizontal) {
 			LeftArrow = false;
 		}
 
-		if (RightArrow) {
+		if (RightArrow)
 			right_prev = horizontal;
-		} else
+		else
 			right_prev = 0f;
 		if (LeftArrow)
 			left_prev = horizontal;
@@ -97,17 +88,19 @@ public class Elephant: MonoBehaviour {
 		if (rb.velocity.x <= 0.5) {
 			walking = false;
 		}
-
+		
 		if (rb.velocity.y > 0.1 || rb.velocity.y < -0.1)
 			jumping = true;
 		else
 			jumping = false;
 
+		RaycastHit hit;
+
 		if (RightArrow) {
 			walking = true;
 			vel.x = 7f;
 			rb.velocity = vel;
-			GetComponent<SpriteRenderer> ().flipX = false;
+			GetComponent<SpriteRenderer> ().flipX = false;	
 		} else if (LeftArrow) {
 			walking = true;
 			vel.x = -7f;
@@ -172,52 +165,4 @@ public class Elephant: MonoBehaviour {
 		rb.velocity = vel;	
 	}
 	//-------------
-	/* Protected Member Variables */
-	protected StateMachine animation_state_machine = new StateMachine();
-
-	public class State_Animation_Movement : State
-	{
-		private float elapsedTime = 0.0f;
-		private uint sprite_index = 0;
-		private float spriteChangeRate;
-		private Elephant Ella;
-
-		public State_Animation_Movement(float spriteChangeRate, Elephant Ella)
-		{
-			this.spriteChangeRate = spriteChangeRate;
-			elapsedTime = spriteChangeRate;
-			this.Ella = Ella;
-		}
-
-		public override void OnStart ()
-		{}
-
-		public override void OnUpdate (float time_delta_fraction)
-		{
-			if (Ella.walking)
-				elapsedTime += 1;
-
-			if (!Ella.walking || Ella.jumping) {
-				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
-				return;
-			}
-
-			if (elapsedTime >= spriteChangeRate) {
-				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.walking_sprites [sprite_index];
-
-				sprite_index += 1;
-
-				if (sprite_index >= Ella.walking_sprites.Length)
-					sprite_index = 0;
-
-				elapsedTime = 0;
-			}	
-		}
-	}
-
-
-	public virtual State NextAnimationState()
-	{
-		return new State_Animation_Movement(8, instance);
-	}
 }
