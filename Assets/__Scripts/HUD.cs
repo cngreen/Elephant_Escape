@@ -15,11 +15,10 @@ public class HUD : MonoBehaviour {
 
 	public bool win = false;
 	public GameObject win_screen_hud;
-	public Image win_screen_background;
-	public Image win_screen_background_black;
-	public Text win_screen_continue;
 
 	public GameObject selector;
+
+	public int current_level = 0;
 
 	void Awake() {
 		HUD.instance = this;
@@ -36,7 +35,7 @@ public class HUD : MonoBehaviour {
 	private bool finished_flashing = false;
 	private int helping_index = 0;
 
-	static string[] helping_text_arr = { "take the key to the cage to free the baby elephant", 
+	public string[] helping_text_arr = { "take the key to the cage to free the baby elephant", 
 		"use the left & right arrow keys to explore the level", 
 		"click space to jump" };
 
@@ -61,58 +60,19 @@ public class HUD : MonoBehaviour {
 				}
 			}
 		}
-
-
+			
 
 		if (game_over) {
 			return;
 		}
 
 		if (win) {
-			Color c;
-			bool Start = Input.GetKeyDown (KeyCode.Return);
-			if (!finished_flashing) {
-				flash_delay -= 1;
-				if (flash_delay <= 0) {
-					flash_delay = 10;
-					// change screen color
-					c = win_screen_background.color;
-					if (c.a == 0.75f) {
-						c.a = 0.0f;
-						win_screen_background.color = c;
-					} else {
-						c.a = 0.75f;
-						number_flashes += 1;
-						if (number_flashes >= 6) {
-							finished_flashing = true;
-							flash_delay = 100;
-						}
-						win_screen_background.color = c;
-					}
-				}
-			} else {//fnished flashing
-				c = win_screen_background.color;
-				c.a = 0.0f;
-				win_screen_background.color = c;
+			bool Start = Input.GetKeyDown (KeyCode.Space);
 
-				flash_delay -= 1;
-
-				if (flash_delay <= 0) {
-					c = win_screen_background_black.color;
-					c.a = 1.0f;
-					win_screen_background_black.color = c;
-					win_screen_continue.enabled = true;
-
-					if (Start) {
-						//replace with correct level
-						int scene_index = SceneManager.GetActiveScene ().buildIndex;
-						if (scene_index == 0)
-							SceneManager.LoadScene (1, LoadSceneMode.Single);
-						else
-							SceneManager.LoadScene (0, LoadSceneMode.Single);
-						return;
-					}
-				}
+			if (Start) {
+				//replace with correct level
+				SceneManager.LoadScene (0, LoadSceneMode.Single);
+				return;
 			}
 		}
 	}
@@ -129,18 +89,5 @@ public class HUD : MonoBehaviour {
 	{
 		game_over = true;
 		game_over_hud.SetActive (true);
-	}
-
-	private int selector_position = 0;
-
-	void moveSelector(bool Right, bool Left){
-		if (Right && selector_position < 2) {
-			selector_position += 1;
-			selector.transform.position += new Vector3 (30, 0, 0);
-		}
-		else if(Left && selector_position > 0){
-			selector_position -= 1;
-			selector.transform.position += new Vector3 (-30, 0, 0);
-			}	
 	}
 }

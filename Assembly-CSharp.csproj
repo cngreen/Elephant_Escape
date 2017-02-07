@@ -51,7 +51,9 @@
      <Compile Include="Assets\__Scripts\Elephant.cs" />
      <Compile Include="Assets\__Scripts\HUD.cs" />
      <Compile Include="Assets\__Scripts\JumpCollider.cs" />
+     <Compile Include="Assets\__Scripts\LevelSelect.cs" />
      <Compile Include="Assets\__Scripts\StateMachine.cs" />
+     <Compile Include="Assets\__Scripts\Tree.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>

@@ -34,9 +34,6 @@ public partial class Elephant: MonoBehaviour {
 		instance = this;
 
 		rb = GetComponent<Rigidbody> ();
-
-		needs_help = true;
-
 	}
 
 	// Update is called once per frame
@@ -129,7 +126,10 @@ public partial class Elephant: MonoBehaviour {
 		if (other.gameObject.tag == "Key") {
 			has_key = true;
 			Destroy (other.gameObject);
-		}
+		} else if (other.gameObject.tag == "Jump Collider") {
+			needs_help = true;
+		} else if (other.gameObject.tag == "Help Point")
+			needs_help = true;
 	}
 
 	void OnCollisionEnter(Collision coll){
@@ -138,12 +138,11 @@ public partial class Elephant: MonoBehaviour {
 		if (coll.gameObject.tag == "Ground") {
 			rb.velocity = Vector3.zero;
 			jumping = false;
-		} else if (coll.gameObject.tag == "Jump Collider") {
-			needs_help = true;
-		}
+		} 
 
 		else if (coll.gameObject.tag == "Baby Elephant") {
 			print ("You win!");
+			HUD.instance.ShowWinSequence ();
 		}
 
 		else if (coll.gameObject.tag == "Cage") {
