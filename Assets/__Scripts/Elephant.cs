@@ -18,6 +18,9 @@ public class Elephant: MonoBehaviour {
 	protected bool Spacebar;
 	protected bool LeftArrow;
 	protected bool RightArrow;
+	protected bool RightArrow_up;
+	protected bool LeftArrow_up;
+
 	protected bool Z_Key;
 	protected bool X_Key;
 
@@ -38,6 +41,10 @@ public class Elephant: MonoBehaviour {
 
 	// Update is called once per frame
 	// ---------------------------------------------------------
+
+	private float right_prev = 0f;
+	private float left_prev = 0f;
+
 	void Update () {
 		animation_state_machine.Update ();
 
@@ -55,9 +62,37 @@ public class Elephant: MonoBehaviour {
 		Z_Key = Input.GetKeyDown (KeyCode.Z);
 		X_Key = Input.GetKeyDown (KeyCode.X);
 
+		RaycastHit hit;
+
+		Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+		if (Physics.Raycast(transform.position, fwd, out hit))
+			print("Found an object - distance: " + hit.distance);
+
 		Vector3 vel = rb.velocity;
 		vel.x = 0f;
 		rb.velocity = vel;
+
+		// CHECK IF BUTTON STILL PRESSED
+		if (RightArrow && right_prev > horizontal){
+			print ("hi");
+			RightArrow = false;
+		}
+		if (LeftArrow && left_prev < horizontal) {
+			print ("hey");
+			LeftArrow = false;
+		}
+
+		if (RightArrow) {
+			right_prev = horizontal;
+		} else
+			right_prev = 0f;
+		if (LeftArrow)
+			left_prev = horizontal;
+		else
+			left_prev = 0f;
+		
+		//--------------------------
 
 		if (rb.velocity.x <= 0.5) {
 			walking = false;
@@ -78,9 +113,6 @@ public class Elephant: MonoBehaviour {
 			vel.x = -7f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = true;
-		} else {
-			vel.x = 0;
-			rb.velocity = vel;
 		}
 
 		if (Spacebar) {
