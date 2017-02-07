@@ -33,7 +33,7 @@ public class Camera: MonoBehaviour {
 			Vector3 elephant_pos = elephant.transform.position;
 
 			camera_pos.x = elephant_pos.x;
-			camera_pos.z = -20;
+			camera_pos.z = -25;
 
 			if (camera_pos.y < (elephant_pos.y - 3))
 				camera_pos.y += 0.1f;

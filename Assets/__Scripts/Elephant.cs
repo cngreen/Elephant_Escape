@@ -35,7 +35,7 @@ public partial class Elephant: MonoBehaviour {
 
 	protected Rigidbody rb;
 
-	private string direction = "right";
+	public string direction = "right";
 
 	// Use this for initialization
 	// ---------------------------------------------------------
@@ -52,6 +52,8 @@ public partial class Elephant: MonoBehaviour {
 
 	private float right_prev = 0f;
 	private float left_prev = 0f;
+
+	private float water_drink_fraction = 0f;
 
 	void Update () {
 		animation_state_machine.Update ();
@@ -130,13 +132,15 @@ public partial class Elephant: MonoBehaviour {
 
 		if (drinking) {
 			if (water_meter < max_water) {
-//				print ("water meter " + water_meter);
-				water_meter += 1;
+				water_drink_fraction += 0.1f;
+				if (water_drink_fraction >= 1f) {
+					water_meter += 1;
+					water_drink_fraction = 0f;
+				}
 			}
 		}
 		if (X_Key && !near_water && water_meter > 0) {
-//			print ("water meter " + water_meter);
-//			water_meter -= 1;
+			water_meter -= 1;
 			SprayWater ();
 		}
 		if (X_Keyup) {

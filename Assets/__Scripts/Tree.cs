@@ -6,10 +6,11 @@ public partial class Tree: MonoBehaviour {
 
 	public int grow_time = 0;
 	public bool reminder_tree = false;
-	public int max_growth = 15;
+	public int max_growth = 25;
+	public bool to_knock_down = false;
 	public bool knocked_down = false;
 
-	private int growth = 0;
+	public int growth = 0;
 
 	void Update(){
 		bool Z_Key = Input.GetKeyDown (KeyCode.Z);
@@ -18,7 +19,7 @@ public partial class Tree: MonoBehaviour {
 		if (Z_Key) {
 			GetComponent<BoxCollider> ().enabled = true;
 		}
-		if (Z_up){
+		if (Z_up && !knocked_down){
 			GetComponent<BoxCollider> ().enabled = false;
 		}
 
@@ -27,8 +28,10 @@ public partial class Tree: MonoBehaviour {
 
 	void OnCollisionEnter(Collision other){
 		if (other.gameObject.tag == "Elephant") {
-			knocked_down = true;
-			KnockDown ();
+			if (!to_knock_down && !knocked_down && growth >= max_growth) {
+				to_knock_down = true;
+				KnockDown ();
+			}
 		}
 	}
 
@@ -59,16 +62,39 @@ public partial class Tree: MonoBehaviour {
 	} //Grow
 
 	void KnockDown(){
-		if (knocked_down) {
-			while (this.transform.rotation.z >= -70) {
-				Quaternion target = Quaternion.Euler (0f, 0f, -90f);
-				float smooth = 2.0f;
-				this.transform.rotation = Quaternion.Slerp (transform.rotation, target, Time.deltaTime * smooth);
+		if (to_knock_down) {
+			knocked_down = true;
+			to_knock_down = false;
 
+			if (Elephant.instance.direction == "right") {
+
+				Quaternion target = Quaternion.Euler (0f, 0f, -90f);
+				this.transform.rotation = target;
+
+				print (this.transform.localScale);
+				print (this.transform.position);
 				Vector3 pos = this.transform.position;
-				pos.y -= 0.1f;
+				pos.y = -1f;
+				pos.x += 9.25f;
+
 				this.transform.position = pos;
 			}
+
+			else if (Elephant.instance.direction == "left") {
+
+				Quaternion target = Quaternion.Euler (0f, 0f, 90f);
+				this.transform.rotation = target;
+
+				print (this.transform.localScale);
+				print (this.transform.position);
+				Vector3 pos = this.transform.position;
+				pos.y = -1f;
+				pos.x -= 9.25f;
+
+				this.transform.position = pos;
+			}
+
+			this.GetComponent<BoxCollider> ().enabled = true;
 		}
 	}
 }
