@@ -33,9 +33,9 @@ public class Elephant: MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 
 		needs_help = true;
-		
+
 	}
-	
+
 	// Update is called once per frame
 	// ---------------------------------------------------------
 	void Update () {
@@ -73,13 +73,14 @@ public class Elephant: MonoBehaviour {
 			vel.x = 7f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = false;
-		}
-
-		if (LeftArrow) {
+		} else if (LeftArrow) {
 			walking = true;
 			vel.x = -7f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = true;
+		} else {
+			vel.x = 0;
+			rb.velocity = vel;
 		}
 
 		if (Spacebar) {
@@ -94,7 +95,7 @@ public class Elephant: MonoBehaviour {
 		if (Z_Key) {
 			print ("Z");
 		}
-		
+
 	}
 
 	// ---------------------------------------------------------
@@ -188,4 +189,3 @@ public class Elephant: MonoBehaviour {
 		return new State_Animation_Movement(8, instance);
 	}
 }
-
