@@ -5,10 +5,9 @@ using UnityEngine;
 public partial class Tree: MonoBehaviour {
 
 	public int grow_time = 0;
-
 	public bool reminder_tree = false;
-
 	public int max_growth = 15;
+	public bool knocked_down = false;
 
 	private int growth = 0;
 
@@ -24,6 +23,13 @@ public partial class Tree: MonoBehaviour {
 		}
 
 		Grow ();
+	}
+
+	void OnCollisionEnter(Collision other){
+		if (other.gameObject.tag == "Elephant") {
+			knocked_down = true;
+			KnockDown ();
+		}
 	}
 
 	void Grow(){
@@ -50,6 +56,19 @@ public partial class Tree: MonoBehaviour {
 				HUD.instance.helping_index = 4;
 			}
 		}
+	} //Grow
 
+	void KnockDown(){
+		if (knocked_down) {
+			while (this.transform.rotation.z >= -70) {
+				Quaternion target = Quaternion.Euler (0f, 0f, -90f);
+				float smooth = 2.0f;
+				this.transform.rotation = Quaternion.Slerp (transform.rotation, target, Time.deltaTime * smooth);
+
+				Vector3 pos = this.transform.position;
+				pos.y -= 0.1f;
+				this.transform.position = pos;
+			}
+		}
 	}
 }
