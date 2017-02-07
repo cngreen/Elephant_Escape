@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\__Scripts\Camera.cs" />
+     <Compile Include="Assets\__Scripts\Droplet.cs" />
      <Compile Include="Assets\__Scripts\Elephant-Animation.cs" />
+     <Compile Include="Assets\__Scripts\Elephant-Collisions.cs" />
      <Compile Include="Assets\__Scripts\Elephant.cs" />
      <Compile Include="Assets\__Scripts\HUD.cs" />
      <Compile Include="Assets\__Scripts\JumpCollider.cs" />

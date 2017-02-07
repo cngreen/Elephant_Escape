@@ -7,13 +7,19 @@ public partial class Elephant: MonoBehaviour {
 	public static Elephant instance;
 	public bool has_key = false;
 	public bool jumping = false;
-	public bool on_ground = true;
 	public bool walking = false;
+	public bool drinking = false;
 
 	public bool needs_help = false;
 
+	public int water_meter = 0;
+	public int max_water = 10;
+
 	public Sprite[] walking_sprites;
+	public Sprite[] drinking_sprites;
 	public Sprite normal_sprite;
+
+	public GameObject water_drip;
 
 	protected bool Spacebar;
 	protected bool LeftArrow;
@@ -23,8 +29,13 @@ public partial class Elephant: MonoBehaviour {
 
 	protected bool Z_Key;
 	protected bool X_Key;
+	protected bool X_Keyup;
+
+	public bool near_water = false;
 
 	protected Rigidbody rb;
+
+	private string direction = "right";
 
 	// Use this for initialization
 	// ---------------------------------------------------------
@@ -58,6 +69,7 @@ public partial class Elephant: MonoBehaviour {
 
 		Z_Key = Input.GetKeyDown (KeyCode.Z);
 		X_Key = Input.GetKeyDown (KeyCode.X);
+		X_Keyup = Input.GetKeyUp (KeyCode.X);
 
 		Vector3 vel = rb.velocity;
 		vel.x = 0f;
@@ -91,14 +103,14 @@ public partial class Elephant: MonoBehaviour {
 		else
 			jumping = false;
 
-		RaycastHit hit;
-
-		if (RightArrow) {
+		if (RightArrow && !drinking) {
+			direction = "right";
 			walking = true;
 			vel.x = 7f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = false;	
-		} else if (LeftArrow) {
+		} else if (LeftArrow && !drinking) {
+			direction = "left";
 			walking = true;
 			vel.x = -7f;
 			rb.velocity = vel;
@@ -110,8 +122,26 @@ public partial class Elephant: MonoBehaviour {
 				Jump ();
 		}
 
-		if (X_Key) {
+		if (X_Key && near_water) {
 			print ("X");
+			drinking = true;
+			animation_state_machine.ChangeState (new State_Animation_Drinking (8, this));
+		}
+
+		if (drinking) {
+			if (water_meter < max_water) {
+//				print ("water meter " + water_meter);
+				water_meter += 1;
+			}
+		}
+		if (X_Key && !near_water && water_meter > 0) {
+//			print ("water meter " + water_meter);
+//			water_meter -= 1;
+			SprayWater ();
+		}
+		if (X_Keyup) {
+			drinking = false;
+			animation_state_machine.ChangeState (new State_Animation_Movement (8, this));
 		}
 
 		if (Z_Key) {
@@ -119,49 +149,26 @@ public partial class Elephant: MonoBehaviour {
 		}
 
 	}
-
-	// ---------------------------------------------------------
-	void OnTriggerEnter(Collider other){
-		print ("trigger: " + other.gameObject.tag);
-		if (other.gameObject.tag == "Key") {
-			has_key = true;
-			Destroy (other.gameObject);
-		} else if (other.gameObject.tag == "Jump Collider") {
-			needs_help = true;
-		} else if (other.gameObject.tag == "Help Point")
-			needs_help = true;
-	}
-
-	void OnCollisionEnter(Collision coll){
-		print ("collision: " + coll.gameObject.tag);
-
-		if (coll.gameObject.tag == "Ground") {
-			rb.velocity = Vector3.zero;
-			jumping = false;
-		} 
-
-		else if (coll.gameObject.tag == "Baby Elephant") {
-			print ("You win!");
-			HUD.instance.ShowWinSequence ();
-		}
-
-		else if (coll.gameObject.tag == "Cage") {
-			if (has_key) {
-				Destroy (coll.gameObject);
-			}
-		}
-
-
-	}
-
 	// ---------------------------------------------------------
 	void Jump(){
 		jumping = true;
-		on_ground = false;
 
 		Vector3 vel = rb.velocity;
 		vel.y = 15f;
 		rb.velocity = vel;	
+	}
+
+	void SprayWater(){
+		GameObject droplet = Instantiate (water_drip);
+		if (direction == "right") {
+			droplet.transform.position = this.transform.position;
+			droplet.transform.position += new Vector3 (2f, 0, 0);
+			droplet.GetComponent<Rigidbody> ().velocity = new Vector3 (6.0f, -3.0f, 0.0f);
+		} else if (direction == "left") {
+			droplet.transform.position = this.transform.position;
+			droplet.transform.position += new Vector3 (-2, 0, 0);
+			droplet.GetComponent<Rigidbody> ().velocity = new Vector3 (-6.0f, -3.0f, 0.0f);
+		}
 	}
 	//-------------
 }

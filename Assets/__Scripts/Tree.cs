@@ -4,7 +4,13 @@ using UnityEngine;
 
 public partial class Tree: MonoBehaviour {
 
-	private int grow_time = 5;
+	public int grow_time = 0;
+
+	public bool reminder_tree = false;
+
+	public int max_growth = 15;
+
+	private int growth = 0;
 
 	void Update(){
 		bool Z_Key = Input.GetKeyDown (KeyCode.Z);
@@ -21,19 +27,29 @@ public partial class Tree: MonoBehaviour {
 	}
 
 	void Grow(){
-		grow_time -= 1;
-
 		if (grow_time > 0) {
-			Vector3 scale = this.transform.localScale;
-			scale.x += 0.1f;
-			scale.y += 0.1f;
+			grow_time -= 1;
 
-			this.transform.localScale = scale;
+			if (growth < max_growth) {
+				Vector3 scale = this.transform.localScale;
+				scale.x += 0.1f;
+				scale.y += 0.1f;
 
-			Vector3 pos = this.transform.position;
-			pos.y += 0.293f;
+				this.transform.localScale = scale;
 
-			this.transform.position = pos;
+				Vector3 pos = this.transform.position;
+				pos.y += 0.293f;
+
+				this.transform.position = pos;
+
+				growth += 1;
+			}
+
+			if (reminder_tree && growth >= max_growth) {
+				Elephant.instance.needs_help = true;
+				HUD.instance.helping_index = 4;
+			}
 		}
+
 	}
 }
