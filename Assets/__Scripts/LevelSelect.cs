@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class LevelSelect : MonoBehaviour {
 	public static LevelSelect instance;
 
+	public GameObject[] upper_levels;
+	public GameObject[] lower_levels;
+
 	public GameObject selector;
 
 	void Awake() {
@@ -44,7 +47,7 @@ public class LevelSelect : MonoBehaviour {
 					SceneManager.LoadScene ("Level_two", LoadSceneMode.Single);
 				} else if (selector_position == 2) {
 					print ("3");
-					//SceneManager.LoadScene ("Level_one", LoadSceneMode.Single);
+					SceneManager.LoadScene ("Level_three", LoadSceneMode.Single);
 				}
 			} else {
 				if (selector_position == 0) {
@@ -68,18 +71,49 @@ public class LevelSelect : MonoBehaviour {
 	void moveSelector(bool Right, bool Left, bool Up, bool Down){
 		if (Down && top) {
 			top = false;
-			selector.transform.position += new Vector3 (0, -130, 0);
+
+			GameObject level = upper_levels [selector_position];
+			float adjust = selector.transform.position.y;
+			adjust -= level.transform.position.y;
+
+			level = lower_levels [selector_position];
+			print (level.transform.position.y);
+			adjust += level.transform.position.y;
+
+			adjust -= selector.transform.position.y;
+
+			selector.transform.position += new Vector3 (0, adjust, 0);
 		} else if (Up && !top) {
-			selector.transform.position += new Vector3 (0, 130, 0);
+			
+			GameObject level = upper_levels [selector_position];
+			float adjust = selector.transform.position.y;
+			adjust -= level.transform.position.y;
+
+			level = lower_levels [selector_position];
+			print (level.transform.position.y);
+			adjust += level.transform.position.y;
+
+			adjust -= selector.transform.position.y;
+
+			selector.transform.position += new Vector3 (0, -1 * adjust, 0);
 			top = true;
 		}
 		else if (Right && selector_position < 2) {
 			selector_position += 1;
-			selector.transform.position += new Vector3 (180, 0, 0);
+			GameObject level = upper_levels [selector_position];
+			float adjust = level.transform.position.x;
+			adjust -= selector.transform.position.x;
+			print (level.transform.position);
+			print (level.name);
+			selector.transform.position += new Vector3 (adjust, 0, 0);
 		}
 		else if(Left && selector_position > 0){
 			selector_position -= 1;
-			selector.transform.position += new Vector3 (-180, 0, 0);
+			GameObject level = upper_levels [selector_position];
+			print (level.name);
+			float adjust = level.transform.position.x;
+			adjust -= selector.transform.position.x;
+			selector.transform.position += new Vector3 (adjust, 0, 0);
 		}	
 	}
 }

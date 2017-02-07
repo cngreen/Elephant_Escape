@@ -30,6 +30,7 @@ public partial class Elephant: MonoBehaviour {
 	protected bool Z_Key;
 	protected bool X_Key;
 	protected bool X_Keyup;
+	protected bool Spacebar_up;
 
 	public bool near_water = false;
 
@@ -119,9 +120,17 @@ public partial class Elephant: MonoBehaviour {
 			GetComponent<SpriteRenderer> ().flipX = true;
 		}
 
+		Spacebar_up = Input.GetKeyUp (KeyCode.Space);
+
 		if (Spacebar) {
 			if (!jumping)
 				Jump ();
+		} else if (Spacebar_up) {
+			Vector3 jump_vel = rb.velocity;
+			if (jump_vel.y > 0f) {
+				jump_vel.y = 0f;
+				rb.velocity = jump_vel;
+			}
 		}
 
 		if (X_Key && near_water) {
