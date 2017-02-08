@@ -113,7 +113,7 @@ public partial class Tree: MonoBehaviour {
 				this.transform.rotation = target;
 
 				Vector3 pos = this.transform.position;
-				pos.y -= 8.14f;
+				pos.y -= 7.64f;
 				pos.x -= 9.2f;
 
 				this.transform.position = pos;

@@ -35,6 +35,7 @@ public partial class Elephant: MonoBehaviour {
 	public bool near_water = false;
 
 	protected Rigidbody rb;
+	protected Vector3 init_pos;
 
 	public string direction = "right";
 
@@ -44,6 +45,8 @@ public partial class Elephant: MonoBehaviour {
 		if (instance != null)
 			print("multiple elephants!!");
 		instance = this;
+
+		init_pos = this.transform.position;
 
 		rb = GetComponent<Rigidbody> ();
 	}

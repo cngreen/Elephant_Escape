@@ -29,18 +29,19 @@ public class Camera: MonoBehaviour {
 			show_level = false;
 
 		if (!show_level) {
-			Vector3 camera_pos = camera.transform.position;
-			Vector3 elephant_pos = elephant.transform.position;
-
-			camera_pos.x = elephant_pos.x;
-			camera_pos.z = -25;
-
-			if (camera_pos.y < (elephant_pos.y - 3))
-				camera_pos.y += 0.1f;
-			else if (camera_pos.y > (elephant_pos.y + 3))
-				camera_pos.y -= 0.1f;
-
-			camera.transform.position = camera_pos;
+			transform.position = elephant.transform.TransformPoint (new Vector3 (-1.5f, 1.5f, -26f));
+//			Vector3 camera_pos = camera.transform.position;
+//			Vector3 elephant_pos = elephant.transform.position;
+//
+//			camera_pos.x = elephant_pos.x;
+//			camera_pos.z = -25;
+//
+//			if (camera_pos.y < (elephant_pos.y - 3))
+//				camera_pos.y += 0.1f;
+//			else if (camera_pos.y > (elephant_pos.y + 3))
+//				camera_pos.y -= 0.1f;
+//
+//			camera.transform.position = camera_pos;
 		}
 		
 	}

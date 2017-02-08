@@ -28,9 +28,9 @@ public partial class Elephant: MonoBehaviour {
 					Destroy (other.gameObject);
 				}
 			}
-		}
-		else if (other.gameObject.tag == "Water")
+		} else if (other.gameObject.tag == "Water")
 			near_water = true;
+
 	}
 
 	void OnTriggerExit(Collider other){
@@ -55,6 +55,10 @@ public partial class Elephant: MonoBehaviour {
 			if (has_key) {
 				Destroy (coll.gameObject);
 			}
+		}
+
+		else if (coll.gameObject.tag == "Spikes") {
+			transform.position = init_pos;
 		}
 	}
 }

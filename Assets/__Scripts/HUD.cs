@@ -39,6 +39,10 @@ public class HUD : MonoBehaviour {
 
 	public string[] helping_text_arr;
 
+	public Text time_text;
+	private float time  = 0;
+	private int display_time = 0;
+
 //	public string[] helping_text_arr = { "take the key to the cage to free the baby elephant", 
 //		"use the left & right arrow keys to explore the level", 
 //		"click space to jump" };
@@ -47,6 +51,16 @@ public class HUD : MonoBehaviour {
 
 
 	void Update () {
+
+		if (time_text != null && !win) {
+			time += Time.deltaTime;
+			if (time >= 1) {
+				display_time += 1;
+				time = 0;
+			}
+
+			time_text.text = "time: " + display_time.ToString ();
+		}
 
 		if (Elephant.instance.needs_help) {
 			if (helping_index < helping_text_arr.Length) {
@@ -62,6 +76,12 @@ public class HUD : MonoBehaviour {
 					text_display_time = 130;
 					helping_index++;
 				}
+			}
+		} else if (helping_text.enabled) {
+			text_display_time -= 1;
+			if (text_display_time <= 0) {
+				helping_text.enabled = false;
+				text_display_time = 130;
 			}
 		}
 
