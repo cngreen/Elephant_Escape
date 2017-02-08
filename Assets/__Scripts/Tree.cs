@@ -102,7 +102,7 @@ public partial class Tree: MonoBehaviour {
 
 				Vector3 pos = this.transform.position;
 				pos.y -= 8.14f;
-				pos.x += 9.2f;
+				pos.x = Elephant.instance.transform.position.x + 10.2f;
 
 				this.transform.position = pos;
 			}
@@ -114,7 +114,7 @@ public partial class Tree: MonoBehaviour {
 
 				Vector3 pos = this.transform.position;
 				pos.y -= 7.64f;
-				pos.x -= 9.2f;
+				pos.x = Elephant.instance.transform.position.x - 10.2f;
 
 				this.transform.position = pos;
 			}
