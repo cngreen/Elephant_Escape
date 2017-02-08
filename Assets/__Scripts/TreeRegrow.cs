@@ -11,8 +11,8 @@ public class TreeRegrow: MonoBehaviour {
 	}
 
 	public void NewTree(Vector3 position){
-		Instantiate (sapling);
-		sapling.transform.position = position;
+		GameObject babytree = Instantiate (sapling);
+		babytree.transform.position = position;
 	}
 }
 

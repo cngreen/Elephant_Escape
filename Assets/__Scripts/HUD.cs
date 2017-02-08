@@ -68,7 +68,6 @@ public class HUD : MonoBehaviour {
 		if (drips != null) {
 			int i = 0;
 			for (; i < Elephant.instance.water_meter; ++i) {
-				print ("i");
 				GameObject drip = drips [i];
 				drip.SetActive (true);
 			}

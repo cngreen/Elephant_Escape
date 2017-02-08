@@ -13,7 +13,7 @@ public partial class Elephant: MonoBehaviour {
 	public bool needs_help = false;
 
 	public int water_meter = 0;
-	public int max_water = 10;
+	public int max_water = 20;
 
 	public Sprite[] walking_sprites;
 	public Sprite[] drinking_sprites;

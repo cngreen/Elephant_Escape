@@ -6,20 +6,22 @@ public partial class Tree: MonoBehaviour {
 
 	public int grow_time = 0;
 	public bool reminder_tree = false;
-	public int max_growth = 25;
+	public int max_growth = 20;
 	public bool to_knock_down = false;
 	public bool knocked_down = false;
 
+	public bool started_growing = false;
+
 	public int growth = 0;
 
-	private Vector3 initial_pos;
+	public Vector3 initial_pos;
 	public GameObject sapling;
 
-	void Start(){
-		initial_pos = transform.position;
-	}
-
 	void Update(){
+
+		if (!started_growing)
+			initial_pos = this.transform.position;
+		
 		bool Z_Key = Input.GetKeyDown (KeyCode.Z);
 		bool Z_up = Input.GetKeyUp (KeyCode.Z);
 
@@ -32,19 +34,29 @@ public partial class Tree: MonoBehaviour {
 
 		Grow ();
 
+		if (growth >= max_growth && !knocked_down) {
+			Blink ();
+		}
+
 		if (knocked_down) {
 			Fade ();
-			if (GetComponent<SpriteRenderer> ().color.a <= 0.002) {
-				print ("hello dead tree");
+			if (GetComponent<SpriteRenderer> ().color.a <= 0.002f) {
+//				print ("hello dead tree");
+//				print(initial_pos);
 				TreeRegrow.instance.NewTree (initial_pos);
 				Destroy (this.gameObject);
 			}
 		}
+
+
 	}
 
 	void OnCollisionEnter(Collision other){
 		if (other.gameObject.tag == "Elephant") {
 			if (!to_knock_down && !knocked_down && growth >= max_growth) {
+				Color c = this.GetComponent<SpriteRenderer> ().color;
+				c.a = 1f;
+				this.GetComponent<SpriteRenderer> ().color = c;
 				to_knock_down = true;
 				KnockDown ();
 			}
@@ -53,6 +65,7 @@ public partial class Tree: MonoBehaviour {
 
 	void Grow(){
 		if (grow_time > 0) {
+			started_growing = true;
 			grow_time -= 1;
 
 			if (growth < max_growth) {
@@ -88,8 +101,8 @@ public partial class Tree: MonoBehaviour {
 				this.transform.rotation = target;
 
 				Vector3 pos = this.transform.position;
-				pos.y = -1f;
-				pos.x += 9.25f;
+				pos.y -= 8.14f;
+				pos.x += 9.2f;
 
 				this.transform.position = pos;
 			}
@@ -100,8 +113,8 @@ public partial class Tree: MonoBehaviour {
 				this.transform.rotation = target;
 
 				Vector3 pos = this.transform.position;
-				pos.y = -1f;
-				pos.x -= 9.25f;
+				pos.y -= 8.14f;
+				pos.x -= 9.2f;
 
 				this.transform.position = pos;
 			}
@@ -114,5 +127,25 @@ public partial class Tree: MonoBehaviour {
 		Color c = this.GetComponent<SpriteRenderer> ().color;
 		c.a -= 0.002f;
 		this.GetComponent<SpriteRenderer> ().color = c;
+	}
+
+
+	private int blink_time = 10;
+	void Blink(){
+		blink_time -= 1;
+
+		if (blink_time <= 0) {
+			blink_time = 10;
+
+			Color c = this.GetComponent<SpriteRenderer> ().color;
+
+			if (c.a == 1) {
+				c.a = 0.5f;
+				this.GetComponent<SpriteRenderer> ().color = c;
+			} else {
+				c.a = 1f;
+				this.GetComponent<SpriteRenderer> ().color = c;
+			}
+		}
 	}
 }

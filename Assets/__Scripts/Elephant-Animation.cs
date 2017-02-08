@@ -68,8 +68,6 @@ public partial class Elephant: MonoBehaviour {
 
 		public override void OnUpdate (float time_delta_fraction)
 		{
-			//print ("drinking animation");
-
 			if (Ella.drinking)
 				elapsedTime += 1;
 
