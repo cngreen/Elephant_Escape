@@ -6,7 +6,7 @@ public partial class Droplet: MonoBehaviour {
 
 	// ---------------------------------------------------------
 	void OnTriggerEnter(Collider other){
-		print ("trigger: " + other.gameObject.tag);
+		print ("droplet trigger: " + other.gameObject.tag);
 		Destroy (this.gameObject);
 	}
 		

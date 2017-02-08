@@ -12,6 +12,13 @@ public partial class Tree: MonoBehaviour {
 
 	public int growth = 0;
 
+	private Vector3 initial_pos;
+	public GameObject sapling;
+
+	void Start(){
+		initial_pos = transform.position;
+	}
+
 	void Update(){
 		bool Z_Key = Input.GetKeyDown (KeyCode.Z);
 		bool Z_up = Input.GetKeyUp (KeyCode.Z);
@@ -24,6 +31,15 @@ public partial class Tree: MonoBehaviour {
 		}
 
 		Grow ();
+
+		if (knocked_down) {
+			Fade ();
+			if (GetComponent<SpriteRenderer> ().color.a <= 0.002) {
+				print ("hello dead tree");
+				TreeRegrow.instance.NewTree (initial_pos);
+				Destroy (this.gameObject);
+			}
+		}
 	}
 
 	void OnCollisionEnter(Collision other){
@@ -71,8 +87,6 @@ public partial class Tree: MonoBehaviour {
 				Quaternion target = Quaternion.Euler (0f, 0f, -90f);
 				this.transform.rotation = target;
 
-				print (this.transform.localScale);
-				print (this.transform.position);
 				Vector3 pos = this.transform.position;
 				pos.y = -1f;
 				pos.x += 9.25f;
@@ -85,8 +99,6 @@ public partial class Tree: MonoBehaviour {
 				Quaternion target = Quaternion.Euler (0f, 0f, 90f);
 				this.transform.rotation = target;
 
-				print (this.transform.localScale);
-				print (this.transform.position);
 				Vector3 pos = this.transform.position;
 				pos.y = -1f;
 				pos.x -= 9.25f;
@@ -96,5 +108,11 @@ public partial class Tree: MonoBehaviour {
 
 			this.GetComponent<BoxCollider> ().enabled = true;
 		}
+	}
+
+	void Fade(){
+		Color c = this.GetComponent<SpriteRenderer> ().color;
+		c.a -= 0.002f;
+		this.GetComponent<SpriteRenderer> ().color = c;
 	}
 }

@@ -77,7 +77,7 @@ public class LevelSelect : MonoBehaviour {
 			adjust -= level.transform.position.y;
 
 			level = lower_levels [selector_position];
-			print (level.transform.position.y);
+			//print (level.transform.position.y);
 			adjust += level.transform.position.y;
 
 			adjust -= selector.transform.position.y;
@@ -90,7 +90,7 @@ public class LevelSelect : MonoBehaviour {
 			adjust -= level.transform.position.y;
 
 			level = lower_levels [selector_position];
-			print (level.transform.position.y);
+			//print (level.transform.position.y);
 			adjust += level.transform.position.y;
 
 			adjust -= selector.transform.position.y;
@@ -103,14 +103,14 @@ public class LevelSelect : MonoBehaviour {
 			GameObject level = upper_levels [selector_position];
 			float adjust = level.transform.position.x;
 			adjust -= selector.transform.position.x;
-			print (level.transform.position);
-			print (level.name);
+			//print (level.transform.position);
+			//print (level.name);
 			selector.transform.position += new Vector3 (adjust, 0, 0);
 		}
 		else if(Left && selector_position > 0){
 			selector_position -= 1;
 			GameObject level = upper_levels [selector_position];
-			print (level.name);
+			//print (level.name);
 			float adjust = level.transform.position.x;
 			adjust -= selector.transform.position.x;
 			selector.transform.position += new Vector3 (adjust, 0, 0);

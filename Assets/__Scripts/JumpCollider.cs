@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpCollider: MonoBehaviour {
+public class TreeRegen: MonoBehaviour {
+	public bool needs_new_tree = false;
+	public GameObject sapling;
+
 	void Update(){
-		if (Elephant.instance.jumping)
-			GetComponent<BoxCollider> ().enabled = false;
-		else
-			GetComponent<BoxCollider> ().enabled = true;
+		if (needs_new_tree) {
+			needs_new_tree = false;
+			Instantiate (sapling);
+		}
 	}
 }
 
