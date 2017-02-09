@@ -89,6 +89,45 @@ public partial class Elephant: MonoBehaviour {
 		}
 	}
 
+	public class State_Animation_TrunkUp : State
+	{
+		private float elapsedTime = 0.0f;
+		private uint sprite_index = 0;
+		private float spriteChangeRate;
+		private Elephant Ella;
+
+		public State_Animation_TrunkUp(float spriteChangeRate, Elephant Ella)
+		{
+			this.spriteChangeRate = spriteChangeRate;
+			elapsedTime = 0;
+			this.Ella = Ella;
+		}
+
+		public override void OnFinish() {
+			//Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
+//			Vector3 fix_pos = Ella.transform.position;
+//			fix_pos.x -= 0.04f;
+//			Ella.transform.position = fix_pos;
+		}
+
+		public override void OnUpdate (float time_delta_fraction)
+		{
+
+			Ella.GetComponent<SpriteRenderer> ().sprite = Ella.trunk_up_sprite;
+//			Vector3 fix_pos = Ella.transform.position;
+//			fix_pos.x += 0.04f;
+//			Ella.transform.position = fix_pos;
+
+			if (Ella.drinking || Ella.walking || Ella.jumping) {
+//				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
+//				fix_pos = Ella.transform.position;
+//				fix_pos.x -= 0.04f;
+//				Ella.transform.position = fix_pos;
+				ConcludeState();
+			}
+		}
+	}
+
 	public virtual State NextAnimationState()
 	{
 		if (Elephant.instance.drinking)

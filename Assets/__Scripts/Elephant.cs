@@ -9,6 +9,7 @@ public partial class Elephant: MonoBehaviour {
 	public bool jumping = false;
 	public bool walking = false;
 	public bool drinking = false;
+	public bool knocked_tree = false;
 
 	public bool needs_help = false;
 
@@ -18,6 +19,7 @@ public partial class Elephant: MonoBehaviour {
 	public Sprite[] walking_sprites;
 	public Sprite[] drinking_sprites;
 	public Sprite normal_sprite;
+	public Sprite trunk_up_sprite;
 
 	public GameObject water_drip;
 
@@ -31,11 +33,14 @@ public partial class Elephant: MonoBehaviour {
 	protected bool X_Key;
 	protected bool X_Keyup;
 	protected bool Spacebar_up;
+	protected bool start_spraying;
 
 	public bool near_water = false;
 
 	protected Rigidbody rb;
 	protected Vector3 init_pos;
+
+	protected int drip_delay = 0;
 
 	public string direction = "right";
 
@@ -151,14 +156,20 @@ public partial class Elephant: MonoBehaviour {
 				}
 			}
 		}
-		if (X_Key && !near_water && water_meter > 0) {
-			water_meter -= 1;
-			SprayWater ();
+		if (X_Key && !near_water && water_meter > 0 && !start_spraying) {
+			start_spraying = true;
 		}
 		if (X_Keyup) {
 			drinking = false;
 			animation_state_machine.ChangeState (new State_Animation_Movement (8, this));
+			start_spraying = false;
 		}
+
+		if (start_spraying && !walking && !jumping) {
+			animation_state_machine.ChangeState (new State_Animation_TrunkUp (16, this));
+			SprayWater ();
+		} else
+			start_spraying = false;
 
 		if (Z_Key) {
 			print ("Z");
@@ -175,15 +186,24 @@ public partial class Elephant: MonoBehaviour {
 	}
 
 	void SprayWater(){
-		GameObject droplet = Instantiate (water_drip);
-		if (direction == "right") {
-			droplet.transform.position = this.transform.position;
-			droplet.transform.position += new Vector3 (2f, 0, 0);
-			droplet.GetComponent<Rigidbody> ().velocity = new Vector3 (6.0f, -3.0f, 0.0f);
-		} else if (direction == "left") {
-			droplet.transform.position = this.transform.position;
-			droplet.transform.position += new Vector3 (-2, 0, 0);
-			droplet.GetComponent<Rigidbody> ().velocity = new Vector3 (-6.0f, -3.0f, 0.0f);
+		drip_delay -= 1;
+
+		if (drip_delay <= 0 && water_meter > 0) {
+
+			water_meter -= 1;
+
+			GameObject droplet = Instantiate (water_drip);
+			if (direction == "right") {
+				droplet.transform.position = this.transform.position;
+				droplet.transform.position += new Vector3 (2.5f, -0.6f, 0);
+				droplet.GetComponent<Rigidbody> ().velocity = new Vector3 (2.0f, -4.0f, 0.0f);
+			} else if (direction == "left") {
+				droplet.transform.position = this.transform.position;
+				droplet.transform.position += new Vector3 (-2.5f, -0.6f, 0);
+				droplet.GetComponent<Rigidbody> ().velocity = new Vector3 (-2.0f, -4.0f, 0.0f);
+			}
+
+			drip_delay = 15;
 		}
 	}
 	//-------------
