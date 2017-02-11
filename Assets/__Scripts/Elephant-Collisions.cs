@@ -69,6 +69,11 @@ public partial class Elephant: MonoBehaviour {
 			spiked = true;
 			GetComponent<SpriteRenderer> ().enabled = false;
 			GetComponent<Rigidbody> ().isKinematic = true;
+			if (direction == "right") {
+				pause_elephant.GetComponent<SpriteRenderer> ().flipX = false;	
+			} else {
+				pause_elephant.GetComponent<SpriteRenderer> ().flipX = true;
+			}
 		}
 	}
 

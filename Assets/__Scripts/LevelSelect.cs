@@ -51,8 +51,7 @@ public class LevelSelect : MonoBehaviour {
 				}
 			} else {
 				if (selector_position == 0) {
-					print ("4");
-					//SceneManager.LoadScene ("Level_one", LoadSceneMode.Single);
+					SceneManager.LoadScene ("Level_four", LoadSceneMode.Single);
 				} else if (selector_position == 1) {
 					print ("5");
 					//SceneManager.LoadScene ("Level_one", LoadSceneMode.Single);
