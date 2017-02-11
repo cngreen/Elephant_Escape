@@ -120,13 +120,13 @@ public partial class Elephant: MonoBehaviour {
 		if (RightArrow && !drinking) {
 			direction = "right";
 			walking = true;
-			vel.x = 7f;
+			vel.x = 8f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = false;	
 		} else if (LeftArrow && !drinking) {
 			direction = "left";
 			walking = true;
-			vel.x = -7f;
+			vel.x = -8f;
 			rb.velocity = vel;
 			GetComponent<SpriteRenderer> ().flipX = true;
 		}
