@@ -66,6 +66,29 @@ public partial class Elephant: MonoBehaviour {
 
 		else if (coll.gameObject.tag == "Spikes") {
 			transform.position = init_pos;
+			spiked = true;
+			GetComponent<SpriteRenderer> ().enabled = false;
+			GetComponent<Rigidbody> ().isKinematic = true;
+		}
+	}
+
+	void RespawnElephant(){
+		pause_elephant.SetActive (true);
+
+		Color c = pause_elephant.GetComponent<SpriteRenderer> ().color;
+		c.a += 0.01f;
+		pause_elephant.GetComponent<SpriteRenderer> ().color = c;
+
+		if (pause_elephant.GetComponent<SpriteRenderer> ().color.a >= 0.9f) {
+			c = pause_elephant.GetComponent<SpriteRenderer> ().color;
+			c.a = 0f;
+			pause_elephant.GetComponent<SpriteRenderer> ().color = c;
+			pause_elephant.SetActive (false);
+
+			spiked = false;
+			GetComponent<SpriteRenderer> ().enabled = true;
+			GetComponent<Rigidbody> ().isKinematic = false;
+
 		}
 	}
 }

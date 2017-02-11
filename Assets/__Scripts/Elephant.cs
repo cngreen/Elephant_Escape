@@ -10,6 +10,9 @@ public partial class Elephant: MonoBehaviour {
 	public bool walking = false;
 	public bool drinking = false;
 	public bool knocked_tree = false;
+	public bool spiked = false;
+
+	public GameObject pause_elephant;
 
 	public bool needs_help = false;
 
@@ -173,6 +176,11 @@ public partial class Elephant: MonoBehaviour {
 
 		if (Z_Key) {
 			print ("Z");
+		}
+
+		// Spike return:
+		if (spiked) {
+			RespawnElephant ();
 		}
 
 	}
