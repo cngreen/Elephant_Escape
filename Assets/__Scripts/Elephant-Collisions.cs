@@ -20,16 +20,19 @@ public partial class Elephant: MonoBehaviour {
 				needs_help = true;
 				Destroy (other.gameObject);
 			} else if (other.gameObject.name == "Help Point C") {
+				HUD.instance.toDisplay.Enqueue (2);
+				needs_help = true;
+				Destroy (other.gameObject);
+			} else if (other.gameObject.name == "Help Point D") {
+				HUD.instance.toDisplay.Enqueue (3);
+				needs_help = true;
+				Destroy (other.gameObject);
+			} else if (other.gameObject.name == "Help Point Tree") {
 				if (water_meter > 0) {
 					HUD.instance.toDisplay.Enqueue (2);
 					needs_help = true;
 					Destroy (other.gameObject);
 				}
-			} else if (other.gameObject.name == "Help Point D") {
-				print ("enqueue 3");
-				HUD.instance.toDisplay.Enqueue (3);
-				needs_help = true;
-				Destroy (other.gameObject);
 			}
 		} else if (other.gameObject.tag == "Water")
 			near_water = true;

@@ -35,6 +35,10 @@ public class HUD : MonoBehaviour {
 			toDisplay.Enqueue (1);
 			toDisplay.Enqueue (2);
 		}
+
+		if (SceneManager.GetActiveScene ().name == "Level_three") {
+			toDisplay.Enqueue (0);
+		}
 	}
 
 	// Update is called once per frame
