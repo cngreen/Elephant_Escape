@@ -40,21 +40,17 @@ public class LevelSelect : MonoBehaviour {
 		if (Space) {
 			if (top) {
 				if (selector_position == 0) {
-					print ("1");
 					SceneManager.LoadScene ("Level_one", LoadSceneMode.Single);
 				} else if (selector_position == 1) {
-					print ("2");
 					SceneManager.LoadScene ("Level_two", LoadSceneMode.Single);
 				} else if (selector_position == 2) {
-					print ("3");
 					SceneManager.LoadScene ("Level_three", LoadSceneMode.Single);
 				}
 			} else {
 				if (selector_position == 0) {
 					SceneManager.LoadScene ("Level_four", LoadSceneMode.Single);
 				} else if (selector_position == 1) {
-					print ("5");
-					//SceneManager.LoadScene ("Level_one", LoadSceneMode.Single);
+					SceneManager.LoadScene ("Level_five", LoadSceneMode.Single);
 				} else if (selector_position == 2) {
 					print ("6");
 					//SceneManager.LoadScene ("Level_one", LoadSceneMode.Single);
