@@ -91,15 +91,10 @@ public partial class Elephant: MonoBehaviour {
 
 	public class State_Animation_TrunkUp : State
 	{
-		private float elapsedTime = 0.0f;
-		private uint sprite_index = 0;
-		private float spriteChangeRate;
 		private Elephant Ella;
 
 		public State_Animation_TrunkUp(float spriteChangeRate, Elephant Ella)
 		{
-			this.spriteChangeRate = spriteChangeRate;
-			elapsedTime = 0;
 			this.Ella = Ella;
 		}
 

@@ -10,23 +10,26 @@ public partial class Elephant: MonoBehaviour {
 		if (other.gameObject.tag == "Key") {
 			has_key = true;
 			Destroy (other.gameObject);
-		} else if (other.gameObject.tag == "Jump Collider") {
-			needs_help = true;
-		} else if (other.gameObject.tag == "Help Point") {
+		}else if (other.gameObject.tag == "Help Point") {
 			if (other.gameObject.name == "Help Point A") {
-				HUD.instance.helping_index = 0;
+				HUD.instance.toDisplay.Enqueue (0);
 				needs_help = true;
 				Destroy (other.gameObject);
 			} else if (other.gameObject.name == "Help Point B") {
-				HUD.instance.helping_index = 2;
+				HUD.instance.toDisplay.Enqueue (1);
 				needs_help = true;
 				Destroy (other.gameObject);
 			} else if (other.gameObject.name == "Help Point C") {
 				if (water_meter > 0) {
-					HUD.instance.helping_index = 3;
+					HUD.instance.toDisplay.Enqueue (2);
 					needs_help = true;
 					Destroy (other.gameObject);
 				}
+			} else if (other.gameObject.name == "Help Point D") {
+				print ("enqueue 3");
+				HUD.instance.toDisplay.Enqueue (3);
+				needs_help = true;
+				Destroy (other.gameObject);
 			}
 		} else if (other.gameObject.tag == "Water")
 			near_water = true;
@@ -53,6 +56,7 @@ public partial class Elephant: MonoBehaviour {
 
 		else if (coll.gameObject.tag == "Cage") {
 			if (has_key) {
+				has_key = false;
 				Destroy (coll.gameObject);
 			}
 		}

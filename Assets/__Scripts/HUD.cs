@@ -22,20 +22,25 @@ public class HUD : MonoBehaviour {
 
 	public int current_level = 0;
 
+	public Image key_image;
+
 	void Awake() {
 		HUD.instance = this;
 	}
 
 	// Use this for initialization
 	void Start () {
-
+		if (SceneManager.GetActiveScene ().name == "Level_one") {
+			toDisplay.Enqueue (0);
+			toDisplay.Enqueue (1);
+			toDisplay.Enqueue (2);
+		}
 	}
 
 	// Update is called once per frame
 	private int flash_delay = 10;
 	private int number_flashes = 0;
 	private bool finished_flashing = false;
-	public int helping_index = 0;
 
 	public string[] helping_text_arr;
 
@@ -43,14 +48,16 @@ public class HUD : MonoBehaviour {
 	private float time  = 0;
 	private int display_time = 0;
 
-//	public string[] helping_text_arr = { "take the key to the cage to free the baby elephant", 
-//		"use the left & right arrow keys to explore the level", 
-//		"click space to jump" };
+	//	public string[] helping_text_arr = { "take the key to the cage to free the baby elephant", 
+	//		"use the left & right arrow keys to explore the level", 
+	//		"click space to jump" };
 
-	private int text_display_time = 130;
+
 
 
 	void Update () {
+
+		DisplayMessage ();
 
 		if (time_text != null && !win) {
 			time += Time.deltaTime;
@@ -62,27 +69,10 @@ public class HUD : MonoBehaviour {
 			time_text.text = "time: " + display_time.ToString ();
 		}
 
-		if (Elephant.instance.needs_help) {
-			if (helping_index < helping_text_arr.Length) {
-				helping_text.enabled = true;
-				helping_text.text = helping_text_arr [helping_index];
-				text_display_time -= 1;
-				if (text_display_time <= 0) {
-					helping_text.enabled = false;
-					if (helping_index == 0)
-						Elephant.instance.needs_help = true;
-					else
-						Elephant.instance.needs_help = false;
-					text_display_time = 130;
-					helping_index++;
-				}
-			}
-		} else if (helping_text.enabled) {
-			text_display_time -= 1;
-			if (text_display_time <= 0) {
-				helping_text.enabled = false;
-				text_display_time = 130;
-			}
+		if (Elephant.instance.has_key) {
+			key_image.enabled = true;
+		} else {
+			key_image.enabled = false;
 		}
 
 		if (drips != null) {
@@ -99,7 +89,7 @@ public class HUD : MonoBehaviour {
 			}
 
 		}
-			
+
 
 		if (game_over) {
 			return;
@@ -115,7 +105,7 @@ public class HUD : MonoBehaviour {
 			}
 		}
 	}
-				
+
 
 	public void ShowWinSequence(){
 		win = true;
@@ -128,5 +118,57 @@ public class HUD : MonoBehaviour {
 	{
 		game_over = true;
 		game_over_hud.SetActive (true);
+	}
+
+	private int text_display_time = 300;
+	private bool message_finished = true;
+
+	public Queue<int> toDisplay = new Queue<int>();
+
+	private int displayed_index = -1;
+	private int helping_index = -1;
+
+	public void DisplayMessage()
+	{
+		if (Elephant.instance.needs_help || toDisplay.Count > 0) {
+			if (message_finished) {
+				if (displayed_index == helping_index && toDisplay.Count > 0) {
+					print ("change message");
+					helping_index = toDisplay.Dequeue ();
+
+					if (helping_index != displayed_index) {
+						Elephant.instance.needs_help = false;
+						helping_text.enabled = true;
+						helping_text.text = helping_text_arr [helping_index];
+						displayed_index = helping_index;
+						message_finished = false;
+					}
+				} else {
+					Elephant.instance.needs_help = false;
+					helping_text.enabled = true;
+					helping_text.text = helping_text_arr [helping_index];
+					displayed_index = helping_index;
+					message_finished = false;
+				}
+
+			} else {
+				if (displayed_index != helping_index) {
+					toDisplay.Enqueue (helping_index);
+					print (toDisplay);
+				}
+			}
+		}
+
+
+		if (helping_text.enabled) {
+			text_display_time -= 1;
+			if (text_display_time <= 0) {
+				message_finished = true;
+				helping_text.enabled = false;
+				Elephant.instance.needs_help = false;
+				text_display_time = 300;
+			}
+		}
+
 	}
 }

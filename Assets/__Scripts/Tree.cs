@@ -85,7 +85,8 @@ public partial class Tree: MonoBehaviour {
 
 			if (reminder_tree && growth >= max_growth) {
 				Elephant.instance.needs_help = true;
-				HUD.instance.helping_index = 4;
+				HUD.instance.toDisplay.Enqueue (3);
+				reminder_tree = false;
 			}
 		}
 	} //Grow
