@@ -21,7 +21,7 @@ public class Camera: MonoBehaviour {
 	//private int level_show_time = 100;
 	private bool start_zoom_out = false;
 	private bool start_zoom_in = false;
-	private float min_zoom = -26f;
+	private float min_zoom = -16f;
 
 	void Update () {
 
