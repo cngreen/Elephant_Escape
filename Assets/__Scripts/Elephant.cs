@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class Elephant: MonoBehaviour {
 
 	public static Elephant instance;
+	public int lives = 3;
 	public bool has_key = false;
 	public bool jumping = false;
 	public bool walking = false;

@@ -10,7 +10,8 @@ public partial class Elephant: MonoBehaviour {
 	public AudioSource fall_sound;
 
 	void PlayJumpSound(){
-		jump_sound.Play ();
+		if (rb.isKinematic == false)
+			jump_sound.Play ();
 	}
 
 	void PlayWaterSound(){

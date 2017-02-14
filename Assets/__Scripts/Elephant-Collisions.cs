@@ -9,6 +9,7 @@ public partial class Elephant: MonoBehaviour {
 		print ("trigger: " + other.gameObject.tag);
 		if (other.gameObject.tag == "Key") {
 			has_key = true;
+
 			Destroy (other.gameObject);
 		}else if (other.gameObject.tag == "Help Point") {
 			if (other.gameObject.name == "Help Point A") {
@@ -82,6 +83,11 @@ public partial class Elephant: MonoBehaviour {
 		pause_elephant.SetActive (true);
 
 		Color c = pause_elephant.GetComponent<SpriteRenderer> ().color;
+
+		if (c.a == 0f) {
+			lives -= 1;
+		}
+		
 		c.a += 0.01f;
 		pause_elephant.GetComponent<SpriteRenderer> ().color = c;
 

@@ -5,18 +5,22 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour {
+
+	public AudioSource gameSound;
+	public AudioSource loseSound;
+
 	public static HUD instance;
 
 	public Text helping_text;
 
 	private bool game_over = false;
 	public GameObject game_over_hud;
-	public Image game_over_background;
 
 	public bool win = false;
 	public GameObject win_screen_hud;
 
 	public GameObject[] drips;
+	public GameObject[] life_images;
 
 	public GameObject selector;
 
@@ -71,7 +75,7 @@ public class HUD : MonoBehaviour {
 
 		DisplayMessage ();
 
-		if (time_text != null && !win) {
+		if (time_text != null && !win && !game_over) {
 			time += Time.deltaTime;
 			if (time >= 1) {
 				display_time += 1;
@@ -102,9 +106,32 @@ public class HUD : MonoBehaviour {
 
 		}
 
+		if (Elephant.instance.lives == 0) {
+			Elephant.instance.gameObject.SetActive (false);
+			if (!game_over) {
+				ShowGameOver ();
+			}
+			game_over = true;
+			print ("he's dead jim");
+		}
+		if (life_images != null) {
+			int i = 0;
+			for (; i < Elephant.instance.lives; ++i) {
+				GameObject life = life_images [i];
+				life.SetActive (true);
+			}
+
+			while (i < life_images.Length) {
+				GameObject life = life_images [i];
+				life.SetActive (false);
+				i++;
+			}
+		}
+
 
 		if (game_over) {
-			return;
+			if (Input.GetKeyDown (KeyCode.Space))
+				SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
 		}
 
 		if (win) {
@@ -128,7 +155,8 @@ public class HUD : MonoBehaviour {
 
 	public void ShowGameOver()
 	{
-		game_over = true;
+		gameSound.Pause ();
+		loseSound.Play ();
 		game_over_hud.SetActive (true);
 	}
 
