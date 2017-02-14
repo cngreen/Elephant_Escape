@@ -53,6 +53,7 @@ public partial class Elephant: MonoBehaviour {
 		} 
 
 		else if (coll.gameObject.tag == "Baby Elephant") {
+			PlayElephantSound ();
 			print ("You win!");
 			HUD.instance.ShowWinSequence ();
 		}

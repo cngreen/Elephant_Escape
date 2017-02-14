@@ -26,16 +26,22 @@ public class LevelSelect : MonoBehaviour {
 	private bool Space;
 	private bool Down;
 	private bool Up;
+	private bool Q_key;
 
 	void Update(){
 		Right = Input.GetKeyDown (KeyCode.RightArrow);
 		Left = Input.GetKeyDown (KeyCode.LeftArrow);
 		Down = Input.GetKeyDown (KeyCode.DownArrow);
 		Up = Input.GetKeyDown (KeyCode.UpArrow);
+		Q_key = Input.GetKeyDown (KeyCode.Q);
 
 		moveSelector (Right, Left, Up, Down);
 
 		Space = Input.GetKeyDown (KeyCode.Space);
+
+		if (Q_key) {
+			Application.Quit ();
+		}
 
 		if (Space) {
 			if (top) {

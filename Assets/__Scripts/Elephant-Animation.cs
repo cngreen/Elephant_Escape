@@ -78,6 +78,8 @@ public partial class Elephant: MonoBehaviour {
 
 			if (elapsedTime >= spriteChangeRate) {
 				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.drinking_sprites [sprite_index];
+				if (sprite_index == 0)
+					Elephant.instance.PlaySlurpSound ();
 
 				sprite_index += 1;
 

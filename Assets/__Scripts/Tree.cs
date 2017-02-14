@@ -93,6 +93,9 @@ public partial class Tree: MonoBehaviour {
 
 	void KnockDown(){
 		if (to_knock_down) {
+
+			Elephant.instance.PlayTreeSound ();
+
 			knocked_down = true;
 			to_knock_down = false;
 

@@ -186,6 +186,7 @@ public partial class Elephant: MonoBehaviour {
 	}
 	// ---------------------------------------------------------
 	void Jump(){
+		PlayJumpSound ();
 		jumping = true;
 
 		Vector3 vel = rb.velocity;
@@ -197,6 +198,7 @@ public partial class Elephant: MonoBehaviour {
 		drip_delay -= 1;
 
 		if (drip_delay <= 0 && water_meter > 0) {
+			PlayWaterSound ();
 
 			water_meter -= 1;
 

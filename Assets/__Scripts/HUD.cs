@@ -24,6 +24,8 @@ public class HUD : MonoBehaviour {
 
 	public Image key_image;
 
+	protected bool return_key;
+
 	void Awake() {
 		HUD.instance = this;
 	}
@@ -60,6 +62,12 @@ public class HUD : MonoBehaviour {
 
 
 	void Update () {
+
+		return_key = Input.GetKeyDown (KeyCode.Return);
+
+		if (return_key) {
+			SceneManager.LoadScene ("Level_Select", LoadSceneMode.Single);
+		}
 
 		DisplayMessage ();
 
