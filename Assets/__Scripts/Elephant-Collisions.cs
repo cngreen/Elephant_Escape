@@ -67,6 +67,7 @@ public partial class Elephant: MonoBehaviour {
 		}
 
 		else if (coll.gameObject.tag == "Spikes") {
+			PlaySpikeSound ();
 			transform.position = init_pos;
 			spiked = true;
 			GetComponent<SpriteRenderer> ().enabled = false;

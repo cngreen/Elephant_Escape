@@ -116,7 +116,7 @@ public class HUD : MonoBehaviour {
 		}
 		if (life_images != null) {
 			int i = 0;
-			for (; i < Elephant.instance.lives; ++i) {
+			for (; i < Elephant.instance.lives && i < life_images.Length; ++i) {
 				GameObject life = life_images [i];
 				life.SetActive (true);
 			}
@@ -184,11 +184,13 @@ public class HUD : MonoBehaviour {
 						message_finished = false;
 					}
 				} else {
-					Elephant.instance.needs_help = false;
-					helping_text.enabled = true;
-					helping_text.text = helping_text_arr [helping_index];
-					displayed_index = helping_index;
-					message_finished = false;
+					if (helping_index < helping_text_arr.Length) {
+						Elephant.instance.needs_help = false;
+						helping_text.enabled = true;
+						helping_text.text = helping_text_arr [helping_index];
+						displayed_index = helping_index;
+						message_finished = false;
+					}
 				}
 
 			} else {
