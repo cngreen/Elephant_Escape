@@ -139,7 +139,18 @@ public class HUD : MonoBehaviour {
 
 			if (Start) {
 				//replace with correct level
-				SceneManager.LoadScene (0, LoadSceneMode.Single);
+				if (current_level == 1)
+					SceneManager.LoadScene ("level_two", LoadSceneMode.Single);
+				else if (current_level == 2)
+					SceneManager.LoadScene ("level_three", LoadSceneMode.Single);
+				else if (current_level == 3)
+					SceneManager.LoadScene ("level_four", LoadSceneMode.Single);
+				else if (current_level == 4)
+					SceneManager.LoadScene ("level_five", LoadSceneMode.Single);
+				else if (current_level == 5)
+					SceneManager.LoadScene ("level_six", LoadSceneMode.Single);
+				else if (current_level == 6)
+					SceneManager.LoadScene (0, LoadSceneMode.Single);
 				return;
 			}
 		}
