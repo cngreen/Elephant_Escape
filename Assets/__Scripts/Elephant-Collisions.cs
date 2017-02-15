@@ -66,7 +66,7 @@ public partial class Elephant: MonoBehaviour {
 			}
 		}
 
-		else if (coll.gameObject.tag == "Spikes") {
+		else if (coll.gameObject.tag == "Spikes" || coll.gameObject.tag == "Wildfire") {
 			PlaySpikeSound ();
 			transform.position = init_pos;
 			spiked = true;

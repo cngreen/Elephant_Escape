@@ -113,10 +113,11 @@ public partial class Elephant: MonoBehaviour {
 			walking = false;
 		}
 		
-		if (rb.velocity.y > 0.1 || rb.velocity.y < -0.1)
+		if (rb.velocity.y > 0.05 || rb.velocity.y < -0.05) {
 			jumping = true;
-		else
+		} else {
 			jumping = false;
+		}
 
 		if (RightArrow && !drinking) {
 			direction = "right";
@@ -166,14 +167,17 @@ public partial class Elephant: MonoBehaviour {
 		if (X_Keyup) {
 			drinking = false;
 			animation_state_machine.ChangeState (new State_Animation_Movement (8, this));
+			drip_delay = 0;
 			start_spraying = false;
 		}
 
 		if (start_spraying && !walking && !jumping) {
 			animation_state_machine.ChangeState (new State_Animation_TrunkUp (16, this));
 			SprayWater ();
-		} else
+		} else {
 			start_spraying = false;
+			drip_delay = 0;
+		}
 
 		if (Z_Key) {
 			print ("Z");
@@ -188,6 +192,7 @@ public partial class Elephant: MonoBehaviour {
 	// ---------------------------------------------------------
 	void Jump(){
 		PlayJumpSound ();
+		animation_state_machine.ChangeState (new State_Animation_Flying (12, this));
 		jumping = true;
 
 		Vector3 vel = rb.velocity;

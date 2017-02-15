@@ -40,10 +40,11 @@ public class HUD : MonoBehaviour {
 			toDisplay.Enqueue (0);
 			toDisplay.Enqueue (1);
 			toDisplay.Enqueue (2);
-		}
-
-		if (SceneManager.GetActiveScene ().name == "Level_three") {
+		} else if (SceneManager.GetActiveScene ().name == "Level_three") {
 			toDisplay.Enqueue (0);
+		} else if (SceneManager.GetActiveScene ().name == "Level_four") {
+			toDisplay.Enqueue (0);
+			toDisplay.Enqueue (1);
 		}
 	}
 

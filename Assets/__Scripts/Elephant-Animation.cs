@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Elephant: MonoBehaviour {
+
+	public Sprite flying_sprite;
 	
 	protected StateMachine animation_state_machine = new StateMachine();
 
@@ -29,9 +31,11 @@ public partial class Elephant: MonoBehaviour {
 			if (Ella.walking)
 				elapsedTime += 1;
 
-			if (!Ella.walking || Ella.jumping) {
+			if (!Ella.walking) {
 				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
 				return;
+			} else if (Ella.jumping) {
+				ConcludeState ();
 			}
 
 			if (elapsedTime >= spriteChangeRate) {
@@ -44,6 +48,47 @@ public partial class Elephant: MonoBehaviour {
 
 				elapsedTime = 0;
 			}	
+		}
+	}
+
+	public class State_Animation_Flying : State{
+		private float spriteChangeRate;
+		private float elapsedTime = 0.0f;
+
+		private Elephant Ella;
+
+		public State_Animation_Flying(float spriteChangeRate, Elephant Ella)
+		{
+			this.spriteChangeRate = spriteChangeRate;
+			elapsedTime = spriteChangeRate;
+			this.Ella = Ella;
+		}
+
+		public override void OnFinish() {
+			Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
+		}
+
+		public override void OnUpdate (float time_delta_fraction)
+		{
+			if (!Ella.jumping)
+				ConcludeState ();
+
+			if (Ella.jumping)
+				elapsedTime += 1;
+
+			if (Ella.drinking || Ella.walking && !Ella.jumping) {
+				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
+				ConcludeState();
+			}
+
+			if (elapsedTime >= spriteChangeRate) {
+				if (Ella.GetComponent<SpriteRenderer> ().sprite != Ella.flying_sprite)
+					Ella.GetComponent<SpriteRenderer> ().sprite = Ella.flying_sprite;
+				else
+					Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
+				
+				elapsedTime = 0;
+			}
 		}
 	}
 
@@ -100,26 +145,12 @@ public partial class Elephant: MonoBehaviour {
 			this.Ella = Ella;
 		}
 
-		public override void OnFinish() {
-			//Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
-//			Vector3 fix_pos = Ella.transform.position;
-//			fix_pos.x -= 0.04f;
-//			Ella.transform.position = fix_pos;
-		}
-
 		public override void OnUpdate (float time_delta_fraction)
 		{
 
 			Ella.GetComponent<SpriteRenderer> ().sprite = Ella.trunk_up_sprite;
-//			Vector3 fix_pos = Ella.transform.position;
-//			fix_pos.x += 0.04f;
-//			Ella.transform.position = fix_pos;
 
 			if (Ella.drinking || Ella.walking || Ella.jumping) {
-//				Ella.GetComponent<SpriteRenderer> ().sprite = Ella.normal_sprite;
-//				fix_pos = Ella.transform.position;
-//				fix_pos.x -= 0.04f;
-//				Ella.transform.position = fix_pos;
 				ConcludeState();
 			}
 		}
@@ -129,6 +160,8 @@ public partial class Elephant: MonoBehaviour {
 	{
 		if (Elephant.instance.drinking)
 			return new State_Animation_Drinking (8, instance);
+		else if (Elephant.instance.jumping)
+			return new State_Animation_Flying (12, instance);
 		return new State_Animation_Movement(8, instance);
 	}
 }
