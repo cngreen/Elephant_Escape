@@ -9,9 +9,13 @@ public class HUD : MonoBehaviour {
 	public AudioSource gameSound;
 	public AudioSource loseSound;
 
+	public int max_score; 
+
 	public static HUD instance;
 
 	public Text helping_text;
+
+	public Text score_text;
 
 	private bool game_over = false;
 	public GameObject game_over_hud;
@@ -160,6 +164,11 @@ public class HUD : MonoBehaviour {
 
 	public void ShowWinSequence(){
 		win = true;
+		score_text.text = "Score: ";
+		int score = max_score;
+		score -= (3 - Elephant.instance.lives) * 200;
+		score -= display_time;
+		score_text.text += score;
 		Elephant.instance.gameObject.SetActive (false);
 		win_screen_hud.SetActive (true);
 		//		print ("You win!");

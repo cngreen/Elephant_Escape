@@ -9,6 +9,7 @@ public partial class Elephant: MonoBehaviour {
 	public AudioSource elephant_sound;
 	public AudioSource fall_sound;
 	public AudioSource spike_sound;
+	public AudioSource sizzle_sound;
 
 	void PlayJumpSound(){
 		if (rb.isKinematic == false)
@@ -29,6 +30,10 @@ public partial class Elephant: MonoBehaviour {
 
 	public void PlayTreeSound(){
 		fall_sound.Play ();
+	}
+
+	public void PlaySizzleSound(){
+		sizzle_sound.Play ();
 	}
 
 	void PlaySpikeSound(){

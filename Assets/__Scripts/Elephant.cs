@@ -161,7 +161,7 @@ public partial class Elephant: MonoBehaviour {
 				}
 			}
 		}
-		if (X_Key && !near_water && water_meter > 0 && !start_spraying) {
+		if (X_Key && !near_water && water_meter > 0 && !start_spraying && !spiked) {
 			start_spraying = true;
 		}
 		if (X_Keyup) {

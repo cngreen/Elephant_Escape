@@ -17,8 +17,10 @@ public partial class Droplet: MonoBehaviour {
 			print (coll.gameObject.GetComponentInParent<Tree> ().grow_time);
 			coll.gameObject.GetComponentInParent<Tree> ().grow_time = 3;
 		}
-		if (coll.gameObject.tag == "Wildfire")
+		if (coll.gameObject.tag == "Wildfire") {
+			Elephant.instance.PlaySizzleSound ();
 			Destroy (coll.gameObject);
+		}
 		
 		Destroy (this.gameObject);
 	}
